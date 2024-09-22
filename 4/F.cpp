@@ -35,9 +35,9 @@ int main() {
 
     int max = 0;
     for (int r1 = 1; r1 <= n; r1++) {
-        for (int c1 = 1; c1 <= n; c1++) {
+        for (int c1 = 1; c1 <= m; c1++) {
             for (int r2 = r1; r2 <= n; r2++) {
-                for (int c2 = c1; c2 <= n; c2++) {
+                for (int c2 = c1; c2 <= m; c2++) {
                     int sum = prefix[r2][c2] - prefix[r2][c1-1] - prefix[r1-1][c2] + prefix[r1-1][c1-1];
                     int temp = 2 * (r2 + c2 - (r1-1) - (c1-1));
                     if (sum == 0 && temp > max) max = temp;
