@@ -1,6 +1,5 @@
 #include <iostream>
-#include <deque>
-#include <algorithm>
+#include <queue>
 
 
 /*
@@ -11,18 +10,17 @@ and pop it from the bonus queue.
 void solve() {
     int n;
     std::cin >> n;
-    std::deque<long long> bonusCards;
+    std::priority_queue<long long> bonusCards;
 
     long long armyPower = 0;
     for (int i = 0; i < n; i++) {
         long long input;
         std::cin >> input;
         if (input == 0 && bonusCards.size() != 0) {
-            std::sort(bonusCards.begin(), bonusCards.end());
-            armyPower += bonusCards.back();
-            bonusCards.pop_back();
+            armyPower += bonusCards.top();
+            bonusCards.pop();
         }
-        else bonusCards.push_back(input);
+        else bonusCards.push(input);
     }
 
     std::cout << armyPower << '\n';
