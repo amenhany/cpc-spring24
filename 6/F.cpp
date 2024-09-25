@@ -1,5 +1,6 @@
 #include <iostream>
-#include <set>
+#include <map>
+#include <vector>
 
 
 int main() {
@@ -9,23 +10,31 @@ int main() {
     int n;
     std::cin >> n;
 
-    std::multiset<int> st;
+    std::vector<int> v(n);
+    std::map<int, int> mp;
     for (int i = 0; i < n; i++) {
-        int input;
-        std::cin >> input;
-        st.insert(input);
+        std::cin >> v[i];
+        if (mp.find(v[i]) != mp.end()) mp[v[i]]++;
+        else mp[v[i]] = 1;
     }
 
-    if (!st.empty()) {
-        int prev = *st.begin();
-        for (auto &i : st) {
-            if (i == prev) continue;
-            else {
-                st.erase(prev);
-                prev = i;
+    if (!mp.empty()) {
+        std::pair<int, int> prev = *mp.begin();
+        auto it = mp.begin();
+        int size = mp.size();
+        for (int i = 0; i < size-1; i++) {
+            it++;
+            std::pair<int, int> curr = *it;
+            if (prev.second > curr.second) {
+                mp[curr.first] = prev.second;
+                curr.second = prev.second;
             }
+            mp.erase(prev.first);
+            prev = curr;
         }
     }
 
-    std::cout << st.size() << '\n';
+    int sum = 0;
+    for (auto &i : mp) sum += i.second;
+    std::cout << sum << '\n';
 }
