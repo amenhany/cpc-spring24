@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <list>
 
 int main() {
     std::ios_base::sync_with_stdio(false);
@@ -8,14 +8,13 @@ int main() {
     int n;
     std::string s;
     std::cin >> n >> s;
-    std::vector<int> v(n, 0);
+    std::list<int> v(1, 0);
 
-    std::vector<int>::iterator it;
-    it = v.begin();
+    auto it = v.begin();
     for (int i = 1; i <= n; i++) {
         if (s[i-1] == 'R') it++;
         it = v.insert(it, i);
     }
 
-    for (int i = 0; i <= n; i++) std::cout << v[i] << ' ';
+    for (auto &i : v) std::cout << i << ' ';
 }
