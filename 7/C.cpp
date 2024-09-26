@@ -9,28 +9,22 @@ using std::vector;
 typedef long long ll;
 
 
-int binary_search_biggest(vector<int>, int, int);
+int binary_search_biggest(vector<ll> &, int, int);
 
 void solve() {
-    int candyNum, q, sugarSum = 0;
+    int candyNum, q;
     cin >> candyNum >> q;
 
-    vector<int> candySugarLevels(candyNum), candyPrefix(candyNum, 0);
-    for (int i = 0; i < candyNum; i++) {
-        cin >> candySugarLevels[i];
-        candyPrefix[i] = candySugarLevels[i];
-        sugarSum += candySugarLevels[i];
-    }
+    vector<ll> candyPrefix(candyNum);
+    for (int i = 0; i < candyNum; i++) cin >> candyPrefix[i];
 
-    std::sort(candySugarLevels.begin(), candySugarLevels.end());
     std::sort(candyPrefix.begin(), candyPrefix.end(), std::greater<int>());
-
     for (int i = 1; i < candyNum; i++) candyPrefix[i] += candyPrefix[i-1];
 
     while (q--) {
-        int requiredSugar, minimumCandies = 0;
+        ll requiredSugar, minimumCandies = 0;
         cin >> requiredSugar;
-        if (sugarSum < requiredSugar) minimumCandies = -1;
+        if (requiredSugar > candyPrefix[candyNum - 1]) minimumCandies = -1;
         else minimumCandies = binary_search_biggest(candyPrefix, candyNum, requiredSugar) + 1;
 
         cout << minimumCandies << '\n';
@@ -47,7 +41,7 @@ int main() {
     while (t--) solve();
 }
 
-int binary_search_biggest(vector<int> a, int n, int target) {
+int binary_search_biggest(vector<ll> &a, int n, int target) {
     int st = 0, ed = n-1, md, ans;
 
     while (st <= ed) {
