@@ -10,6 +10,14 @@ using std::vector;
 typedef long long ll;
 
 
+// unused by me
+bool check(int participants, std::map<int, int> mp, int days) {
+    int people = 0;
+    if (days != 0) for (auto &i : mp) people += i.second/days;
+    if (people < participants) return false;
+    else return true;
+}
+
 int main() {
     std::ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
@@ -23,8 +31,7 @@ int main() {
     for (int i = 0; i < foodPackages; i++) {
         int foodType;
         cin >> foodType;
-        if (foodTypes.find(foodType) == foodTypes.end()) foodTypes[foodType] = 1;
-        else foodTypes[foodType]++;
+        foodTypes[foodType]++;
     }
 
     int days = 1;
@@ -37,6 +44,18 @@ int main() {
         }
         days++;
     }
+
+    // binary search from the lecture that gives the wrong answer
+
+    // int st = 0, end = 100, md, days = 0;
+    // while (st < end) {
+    //     md = (st + end)/2;
+    //     if (check(participants, foodTypes, md)) {
+    //         days = md;
+    //         st = md + 1;
+    //     }
+    //     else end = md;
+    // }
 
     cout << days << '\n';
 }
